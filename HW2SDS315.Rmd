@@ -3,12 +3,10 @@ title: "Homework 2"
 author: "Trent Latz"
 output: 
   pdf_document:
-    toc: TRUE
-    toc_depth: 2
 ---
-**Name:** Trent Latz
-**UT EID:** tjl2597
-**GitHub:** [GitHub Repo Link](https://github.com/trentjlatz/SDS315-HW2)
+
+**Name:** Trent Latz **UT EID:** tjl2597 **GitHub Link:** https://github.com/trentjlatz/SDS315-HW2
+
 ```{r}
 knitr::opts_chunk$set(echo = FALSE,
                       eval = TRUE, 
@@ -26,6 +24,7 @@ profs <- read.csv("profs.csv")
 # Problem 1: Beauty, or not, in the classroom
 
 ## Histogram for Overall Course Evaluation Scores
+
 ```{r}
 ggplot(profs)+
 geom_histogram(aes(x = eval), fill = "skyblue", color = "black")+
@@ -35,9 +34,11 @@ geom_histogram(aes(x = eval), fill = "skyblue", color = "black")+
     y = "Frequency")+
   theme_minimal()
 ```
+
 The histogram has roughly a normal distribution centered at about 4. This suggests that the vast majority of students give their courses good scores.
 
-##  Side-by-Side Boxplots by Native English Speaker Status
+## Side-by-Side Boxplots by Native English Speaker Status
+
 ```{r}
 ggplot(profs, aes(x = native, y = eval)) +
   geom_boxplot(fill = c("pink", "lightblue")) +
@@ -49,9 +50,11 @@ ggplot(profs, aes(x = native, y = eval)) +
   theme_minimal()
 
 ```
+
 The graph above shows that professors who are native English speakers on average get an evaluation about .5 above those who are non-native. This suggests that a foreign accent negatively impacts course evaluation scores.
 
 ## Faceted Histogram by Instructor Gender
+
 ```{r}
 ggplot(profs, aes(x = eval, fill = gender))+
   geom_histogram(bins = 15, color = "black", show.legend = FALSE)+
@@ -61,9 +64,11 @@ ggplot(profs, aes(x = eval, fill = gender))+
        y = "Frequency")+
   theme_minimal()
 ```
+
 The male professors tend to get higher course evaluation scores than female professors. They have a similar distribution, but the male graph is shifted further right.
 
 ## Scatterplot of Attractiveness vs. Evaluation Scores
+
 ```{r}
 ggplot(profs, aes(x = beauty, y = eval))+
   geom_point(color = "pink")+
@@ -76,11 +81,13 @@ ggplot(profs, aes(x = beauty, y = eval))+
   theme_minimal()
 cor(profs$beauty, profs$eval, use = "complete.obs")
 ```
+
 The plot above shows the very small correlation between the professor's attractiveness and the course evaluation score. This suggests that the attractiveness of the professor is a small factor in the student's decision.
 
 # Problem 2: Bike Sharing
 
 ## Average hourly bike rentals across all hours of the day
+
 ```{r}
 hourly <- bikeshare %>% 
   group_by(hr) %>% 
@@ -95,9 +102,11 @@ ggplot(hourly, aes(x = hr, y = avg))+
   )+
   theme_minimal()
 ```
+
 This graph shows the average number of bike rentals across all hours of the day, from 0 to 23. The x-axis is the hours of the day, while the y-axis shows the average number of bike rentals (units: total rentals). There are spikes in average bike rentals at about 8 AM and again at about 5 PM This trend provides insight when bike rental demand is highest, which is useful for managing availability. The data shows that bike rentals follow the typical daily pattern of someone working a 9-5, with peaks when going to or leaving from work.
 
 ## Faceted line graph of average hourly bike rentals, grouped by working day
+
 ```{r, results = "hide"}
 hourly_by_workday <- bikeshare %>% 
   group_by(hr, workingday) %>% 
@@ -113,9 +122,11 @@ ggplot(hourly_by_workday, aes(x = hr, y = avg, color = factor(workingday)))+
   )+
   theme_minimal()
 ```
-This faceted line graph illustrates the average bike rentals by hour of the day, separated by where or not it is a working day. The x-axis represents the hours of the day, while the y-axis shows the average number of bike rentals (units: total rentals). These graphs show what was shown in the prior graph, where there are spikes corresponding to the workday. On non-workdays, the max is also around 5 pm. Ridership is significantly higher on working days, especially around 8 AM and 5 PM. 
+
+This faceted line graph illustrates the average bike rentals by hour of the day, separated by where or not it is a working day. The x-axis represents the hours of the day, while the y-axis shows the average number of bike rentals (units: total rentals). These graphs show what was shown in the prior graph, where there are spikes corresponding to the workday. On non-workdays, the max is also around 5 pm. Ridership is significantly higher on working days, especially around 8 AM and 5 PM.
 
 ## Average ridership during 9 AM by weather situation, faceted by working day
+
 ```{r}
 nineam <- bikeshare %>% 
   filter(hr == 9) %>% 
@@ -133,10 +144,13 @@ ggplot(nineam, aes(x = weathersit, y = avg, fill = workingday))+
   )+
   theme_minimal()
 ```
+
 This faceted bar plot shows the average number of bike rentals at 9 AM, separated by weather situation codes and whether or not it is a working day.The plot being broken up by the workind day variable allows us to compare the patterns during days when people are working versus when they are not. The graphs above show that under the same weather conditions, more bike rentals occur on working days. It also shows that as the weather conditions worsen, the average number of bike rentals decrease.
 
 # Problem 3: Capital Metro UT Ridership
+
 ## 1: Faceted Line Graph: Average Boardings by Hour of Day, Day of Week, and Month
+
 ```{r}
 avg_boardings <- metro %>% 
   group_by(day_of_week, month, hour_of_day) %>% 
@@ -157,9 +171,11 @@ ggplot(avg_boardings, aes(x = hour_of_day, y = avg_boarding, color = month))+
   ) +
   theme_minimal()
 ```
+
 This faceted line graph shows the average number of boardings at each hour of the day (x-axis) for each day of the week (facets). The lines represent different months (September, October, November) and are distinguished by color. The plot suggests that peak boardings occur around 5 PM, except for Sunday. The 1 PM peak on Sunday could be due to church. The average boardings on Mondays in September appear lower possibly due to reduced demand at the beginning of the semester. Boardings on Wednesdays, Thursdays, and Fridays in November are lower most likely due to Thanksgiving break.
 
 ## 2: Faceted Scatter Plot: Boardings vs. Temperature by Hour of Day and Weekend Status
+
 ```{r}
 ggplot(metro, aes(x = temperature, y = boarding, color = weekend))+
   geom_point(size = .5)+
@@ -176,10 +192,13 @@ correlation <- metro %>%
   group_by(hour_of_day, weekend) %>% 
   summarise(correlation = cor(temperature, boarding, use = "complete.obs"))
 ```
+
 The scatterplot shows the relationship between temperatur (x-axis) and boardings (y-axis) for each hour day, faceted by the hour of the day. Points are colored according to whether it is a weekday or weekend. When weekday status and hour of the day are kept constant, the graphs show that there is extremely low positive correlation between temperature and boardings. I expected the boardings to go up more when temperature increases. The ridership appears to be slightly influenced by temperature.
 
 # Problem 4
+
 ## Table of Top 10 Most Popular Songs
+
 ```{r}
 top_10 <- billboard %>% 
   group_by(song, performer) %>% 
@@ -187,9 +206,11 @@ top_10 <- billboard %>%
   slice_max(order_by = count, n = 10)
 top_10
 ```
+
 The table shows that the longest a song stayed on the Billboard Top 100. This song was Radioactive by Imagine Dragons. The top tens song ranged from 64 to 87 weeks on the top.
 
 ## Musical Diversity Over Time
+
 ```{r}
 diversity <- billboard %>% 
   filter(year != 1958 & year != 2021) %>% 
@@ -205,9 +226,11 @@ ggplot(diversity, aes(x = year, y = unique_songs))+
   )+
   theme_minimal()
 ```
+
 The line graph portrays a max in 1966 followed by 1967. There were more songs charting during those years than any other. This is closely followed by 2020. Interestingly, there was a sharp decline after 2011.
 
 ## Ten-Week Hits by Artist
+
 ```{r}
 ten_week_hits <- billboard %>% 
   group_by(performer, song) %>% 
@@ -227,4 +250,5 @@ ggplot(ten_week_hits, aes(x = fct_reorder(performer, songs), y = songs))+
   ) +
   theme_minimal()
 ```
+
 This bar plot highlights the 19 artists who have had at least 30 songs appear on the Billboard Top 100 for at least 10 weeks. The x-axis lists the artists, and the y-axis shows the number of ten-week hits. The plot is ordered by the number of hits, emphasizing the most succesful artist in terms of time. They range from 30 to 52. Elton John has the longest run.
