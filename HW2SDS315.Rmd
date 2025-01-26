@@ -8,7 +8,7 @@ output:
 ---
 **Name:** Trent Latz
 **UT EID:** tjl2597
-**GitHub:** [GitHub Repo Link]()
+**GitHub:** [GitHub Repo Link](https://github.com/trentjlatz/SDS315-HW2)
 ```{r}
 knitr::opts_chunk$set(echo = FALSE,
                       eval = TRUE, 
